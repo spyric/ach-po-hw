@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: hello-world
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+        - name: app
+          image: spyric/arch-po-otus:v0.1
+          ports:
+            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              port: 8000
+              path: /
+            periodSeconds: 5
+            initialDelaySeconds: 10
+          readinessProbe:
+            httpGet:
+              port: 8000
+              path: /
+            successThreshold: 2
+            periodSeconds: 1
