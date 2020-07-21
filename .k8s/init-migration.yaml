@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-db
+spec:
+  template:
+    spec:
+      containers:
+        - name: pi
+          env:
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  key: DATABASE_URI
+          image: spyric/arch-po-otus:v0.1
+          command: ["npm", "run", "migrate"]
+      restartPolicy: Never
+  backoffLimit: 2
+
