@@ -1,13 +1,24 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser')
+
 const usersRouter = require('./routes/users');
+const {sequelize} = require('./models/database')
+
+app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-app.get('/health', function (req, res) {
-  res.send({ 'status': 'OK' });
+app.get('/health', async function (req, res) {
+  try {
+    await sequelize.authenticate();
+    res.send({ 'status': 'OK' });
+  } catch (error) {
+    res.status(500).send({ 'status': 'FAILED' });
+  }
+
 });
 
 app.use('/users', usersRouter)
