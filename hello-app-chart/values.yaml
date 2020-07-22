@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: spyric/arch-po-otus
@@ -21,8 +21,6 @@ ingress:
     - host: arch.homework
       paths:
         - "/otusapp/egor-talantsev($|/)(.*)"
-
-
 
 postgresql:
   enabled: true

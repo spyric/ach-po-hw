@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "a119bb7b-d5a0-46d1-8b38-39def6797b5a",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01. New User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91e717c4-8f23-45ad-8568-c218292d798d",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"userId\", responseJSON[\"id\"])",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"johndoe589\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"bestjohn@doe.com\",\n  \"phone\": \"+71002003040\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/users",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02. User details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91e717c4-8f23-45ad-8568-c218292d798d",
+						"exec": [
+							"pm.test(\"Record updated\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(pm.variables.get(\"userId\"));",
+							"    pm.expect(jsonData.username).to.eql('johndoe589');",
+							"    pm.expect(jsonData.firstName).to.eql('John');",
+							"    pm.expect(jsonData.lastName).to.eql('Doe');",
+							"    pm.expect(jsonData.email).to.eql('bestjohn@doe.com');",
+							"    pm.expect(jsonData.phone).to.eql('+71002003040');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03. Update user details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91e717c4-8f23-45ad-8568-c218292d798d",
+						"exec": [
+							"pm.test(\"Record updated\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(pm.variables.get(\"userId\"));",
+							"    pm.expect(jsonData.username).to.eql('janebaz');",
+							"    pm.expect(jsonData.firstName).to.eql('Jane');",
+							"    pm.expect(jsonData.lastName).to.eql('Baz');",
+							"    pm.expect(jsonData.email).to.eql('bestjave@baz.com');",
+							"    pm.expect(jsonData.phone).to.eql('+79999999999');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"janebaz\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Baz\",\n  \"email\": \"bestjave@baz.com\",\n  \"phone\": \"+79999999999\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04. Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91e717c4-8f23-45ad-8568-c218292d798d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/users/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/health",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c32eeee1-2f0b-4ba3-97a5-2527b7f2a1d3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3b713b53-45cf-420a-ab9f-b705c4590447",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "dd3040e1-21cd-48f4-a4ab-f42e80fae067",
+			"key": "host",
+			"value": "arch.homework/otusapp/egor-talantsev"
+		},
+		{
+			"id": "c6685252-a854-4b41-be86-6c279b96c032",
+			"key": "userId",
+			"value": 1
+		}
+	],
+	"protocolProfileBehavior": {}
+}
