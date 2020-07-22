@@ -1,0 +1,33 @@
+replicaCount: 1
+
+image:
+  repository: spyric/arch-po-otus
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+service:
+  type: NodePort
+  port: 8000
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  hosts:
+    - host: arch.homework
+      paths:
+        - "/otusapp/egor-talantsev($|/)(.*)"
+
+
+
+postgresql:
+  enabled: true
+  postgresqlUsername: user
+  postgresqlPassword: pass
+  postgresqlDatabase: myapp
+  service:
+    port: "5432"

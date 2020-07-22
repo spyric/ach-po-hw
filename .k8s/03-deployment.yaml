@@ -16,13 +16,13 @@ spec:
     spec:
       containers:
         - name: app
-          image: spyric/arch-po-otus:v0.1
+          image: spyric/arch-po-otus:v0.2
           ports:
             - containerPort: 8000
           livenessProbe:
             httpGet:
               port: 8000
-              path: /
+              path: /health
             periodSeconds: 5
             initialDelaySeconds: 10
           readinessProbe:

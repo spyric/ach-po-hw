@@ -12,7 +12,8 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: DATABASE_URI
-          image: spyric/arch-po-otus:v0.1
+                  name: hello-app-secret
+          image: spyric/arch-po-otus:v0.2
           command: ["npm", "run", "migrate"]
       restartPolicy: Never
   backoffLimit: 2

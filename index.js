@@ -11,6 +11,12 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
+app.get('/config', function (req, res) {
+  res.send({
+    DATABASE_URI: process.env.DATABASE_URI,
+  });
+});
+
 app.get('/health', async function (req, res) {
   try {
     await sequelize.authenticate();
