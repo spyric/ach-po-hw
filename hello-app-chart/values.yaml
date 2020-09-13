@@ -21,6 +21,9 @@ ingress:
     - host: arch.homework
       paths:
         - "/otusapp/egor-talantsev($|/)(.*)"
+metrics:
+  serviceMonitor:
+    enabled: true
 
 postgresql:
   enabled: true

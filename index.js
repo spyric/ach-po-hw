@@ -2,10 +2,13 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
 
+const { Prometheus, speedMiddleware } = require('./metrics');
+
 const usersRouter = require('./routes/users');
 const {sequelize} = require('./models/database')
 
 app.use(bodyParser.json())
+app.use(speedMiddleware);
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -28,6 +31,11 @@ app.get('/health', async function (req, res) {
 });
 
 app.use('/users', usersRouter)
+
+app.get('/metrics', (req, res) => {
+  res.set('Content-Type', Prometheus.register.contentType)
+  res.end(Prometheus.register.metrics())
+})
 
 app.listen(8000, function () {
   console.log('Listen on port 8000!');
